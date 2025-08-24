@@ -1,0 +1,13 @@
+{
+  "users":[{
+    "id":1,
+    "name":"knowhere",
+    "email":"kw@gmail.com",
+    "phone":"0100000000"
+  }],
+
+  "roomCategories":["VIP Rooms , Offices , Meeting Rooms , Partitions , Virtual Offices"],
+
+  
+
+}

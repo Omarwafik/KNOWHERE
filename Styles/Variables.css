@@ -1,0 +1,17 @@
+:root {
+  /* Colors */
+  --Orange-primary: #ff6f00;
+  --Orange-secondary: #ff8f00;
+  --Orange-hover: #d75a00;
+  --Orange-light: #fff176;
+  --White-color: #fff;
+  /* fonts */
+  --font-title: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-logo: "Barlow Semi Condensed", sans-serif;
+
+  --font-size-title: 2rem;
+  --font-size-body: 1rem;
+
+  --font-weight-title: 700;
+  --font-weight-body: 400;
+}
