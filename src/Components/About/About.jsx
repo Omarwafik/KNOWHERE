@@ -1,55 +1,104 @@
-  import React from 'react'
-  import {motion} from "framer-motion"
-  import { values } from "../../data/data"
-  import * as Icons from "lucide-react";
-  import { containerStagger, fadeInUp } from '../../Motion/motion';
-  // import img1 from "../../assets/images/Values/people-comunity.webp"
+import React from "react";
+import company from "../../assets/images/KW/KWCompany.avif";
+import { motion } from "framer-motion";
+import CountUp from "react-countup";
+// import { motion } from "framer-motion";
+import { Armchair } from "lucide-react";
+import { useInView } from "react-intersection-observer";
 
-  export default function About() {
-    return (
-      <div className="cont px-3 py-12 sm:p-4 sm:py-16 bg-light rounded-lg" id='about'>
-        <h1 className='text-4xl sm:text-6xl mb-3 text-primary text-center font-title'>
-          <span className='text-black'>Our </span>Value
-        </h1>
+import {
+  fadeInDown,
+  fadeInDownLong,
+  fadeInLeft,
+  fadeInUp,
+} from "../../Motion/motion";
+export default function About() {
+  const { ref, inView } = useInView({ triggerOnce: true }); // مرة واحدة لما يظهر
 
-        <motion.div 
-          className="boxes p-0 sm:p-10 grid [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))] gap-3"
-          variants={containerStagger}
+  return (
+    <section
+      className="px-5 py-20 md:py-24 m-1 md:m-3 flex flex-col md:flex-row justify-center gap-3 sm:gap-5  items-center min-h-[80vh] bg-white p-5 rounded"
+      style={{
+        background: "linear-gradient(315deg, #e4e2dd 50%, #ffff 50%)",
+      }}
+      id="about"
+    >
+      {/* kalam */}
+      <aside className="  text-center md:text-left flex flex-col gap-3 ">
+        <motion.div
+          variants={fadeInDown}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.6 }}
+          className="text"
         >
-          {values.map((value, index) => {
-            const Icon = Icons[value.icon]; 
-            return (
-                <motion.div
-                  key={index}
-                  style={{ backgroundImage: `url(${value.image})`, backgroundSize: "cover", backgroundPosition: "center" }}
-                  className="box h-[300px] border-primary border-2 rounded-xl group"
-                  variants={fadeInUp}
-                >
-                        <motion.div
-                        // initial={{ height: 0 }}
-                        // whileHover={{ height: "100%" }}
-                        // transition={{ duration: 0.5, ease: "easeInOut" }}
-                        className="h-full w-full bg-black/70 rounded-xl opacity-0 group-hover:opacity-100 transition duration-300"
-                      >
-                        <motion.div
-                            initial={{ opacity: 0, y: 50 }}
-                            whileHover={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="h-full w-full flex flex-col justify-center gap-5 p-4"
-                          >
-                            {Icon && <Icon className="w-9 h-9 text-primary" />}
-                            <h3 className="text-3xl font-semibold text-primary">{value.title}</h3>
-                            <p className="text-gray-300">{value.description}</p>
-                          </motion.div>
-                    </motion.div>
-                </motion.div>
-            );
-          })}
+          {/* <span className="block text-sm md:text-lg lg:text-2xl text-gray-600 mb-4">
+            What is Knowhere?
+          </span> */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-title text-primary">
+            KNOWHERE
+          </h1>
         </motion.div>
+        <motion.p
+          variants={fadeInLeft}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-[16px] md:text-lg max-w-xl text-wrap text-left leading-8 text-gray-700 capitalize"
+        >
+          KNOWHERE is a modern and dynamic co-working space designed to foster
+          creativity, productivity, and collaborations. Our workspace provides
+          professionals. freelancers startups and remote teams with a flexible
+          and innovative enviroment to work, connect and grow.
+        </motion.p>
+        {/* hena mmkn hagat zy b2alna kam sana aw keda */}
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 50 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="flex gap-2 sm:gap-10 mt-5">
+            <div className="flex gap-3 sm:gap-5 items-center px-6 py-2 text-2xl font-medium ">
+              {/* <Armchair
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-20 lg:h-20"
+                color="#d85b00"
+              /> */}
+              <link type="image/png" sizes="32x32" rel="icon" href=".../icons8-meeting room-ios_filled-32.png"></link>
+              <div className="flex flex-col sm:text-2xl text-sm">
+                <span>Seats</span>
+                <span>+{inView && <CountUp end={105} duration={4} />}</span>
+              </div>
+            </div>
+            <div className="flex gap-3 sm:gap-5 items-center px-6 py-2 text-2xl font-medium ">
+              <Armchair
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-20 lg:h-20"
+                color="#d85b00"
+              />
+              <div className="flex flex-col sm:text-2xl text-sm">
+                <span>Rooms</span>
+                <span>+{inView && <CountUp end={24} duration={4} />}</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </aside>
 
-      </div>
-    )
-  }
+      {/* الصورة */}
+      <motion.aside
+        variants={fadeInDownLong}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.5 }}
+        className=""
+      >
+        <img
+          src={company}
+          loading="lazy"
+          alt="Company Photo"
+          className="w-screen md:w-[600px] h-[45vh] sm:h[70vh] md:h-[80vh] object-cover shadow-black shadow-lg "
+        />
+      </motion.aside>
+    </section>
+  );
+}

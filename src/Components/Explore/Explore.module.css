@@ -1,21 +1,14 @@
-/* .cardsContainer:hover .card {
-  filter: grayscale(100%);
-  opacity: 0.5;
-  transform: scale(0.95);
-  transition: all 0.4s ease-in-out;
-} */
+@media (min-width: 640px) {
+  .cardsContainer:has(.card:hover) .card {
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transform: scale(0.97) !important;
+    transition: all 0.4s ease-in-out;
+  }
 
-.cardsContainer:has(.card:hover) .card {
-  filter: grayscale(100%);
-  opacity: 0.5;
-  transform: scale(0.95);
-  transition: all 0.4s ease-in-out;
+  .cardsContainer:has(.card:hover) .card:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.01) !important;
+  }
 }
-
-.cardsContainer:has(.card:hover) .card:hover {
-  filter: grayscale(0%);
-  opacity: 1;
-  transform: scale(1.02);
-  cursor: pointer;
-}
-

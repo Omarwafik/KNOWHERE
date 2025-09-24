@@ -1,4 +1,5 @@
 {
+  "homepage": "https://knowhere-eg.com/",
   "name": "knowhere",
   "private": true,
   "version": "0.0.0",
@@ -7,24 +8,37 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.7",
     "@heroicons/react": "^2.2.0",
     "@react-oauth/google": "^0.12.2",
+    "@splidejs/react-splide": "^0.7.12",
+    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
+    "axios": "^1.11.0",
+    "chrome-launcher": "^1.2.0",
     "firebase": "^12.1.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.12",
     "jwt-decode": "^4.0.0",
+    "lighthouse": "^12.8.2",
     "lucide-react": "^0.540.0",
     "react": "^19.1.1",
+    "react-countup": "^6.5.3",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
+    "react-intersection-observer": "^9.16.0",
+    "react-lazy-load-image-component": "^1.6.3",
+    "react-parallax": "^3.5.2",
     "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^7.8.1",
+    "react-simple-typewriter": "^5.0.1",
     "shadcn": "^2.10.0",
     "swiper": "^11.2.10",
+    "tailwind-scrollbar": "^3.0.5",
     "yet-another-react-lightbox": "^3.25.0",
     "yup": "^1.7.0"
   },
@@ -38,9 +52,23 @@
     "eslint": "^9.33.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "gh-pages": "^6.3.0",
     "globals": "^16.3.0",
     "postcss": "^8.5.6",
+    "rollup-plugin-visualizer": "^6.0.3",
     "tailwindcss": "^3.4.17",
     "vite": "^7.1.2"
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Omarwafik/KNOWHERE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Omarwafik/KNOWHERE/issues"
   }
 }

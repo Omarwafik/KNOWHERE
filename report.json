@@ -1,0 +1,37 @@
+[
+  {
+    "url": "https://omarwafik.github.io/KNOWHERE/",
+    "performance": 0.82,
+    "seo": 0.82,
+    "accessibility": 0.86,
+    "bestPractices": 0.96
+  },
+  {
+    "url": "https://omarwafik.github.io/KNOWHERE/rooms/Shared%20Areas",
+    "performance": null,
+    "seo": null,
+    "accessibility": null,
+    "bestPractices": null
+  },
+  {
+    "url": "https://omarwafik.github.io/KNOWHERE/rooms/Meeting%20Rooms",
+    "performance": null,
+    "seo": null,
+    "accessibility": null,
+    "bestPractices": null
+  },
+  {
+    "url": "https://omarwafik.github.io/KNOWHERE/rooms/Office",
+    "performance": null,
+    "seo": null,
+    "accessibility": null,
+    "bestPractices": null
+  },
+  {
+    "url": "https://omarwafik.github.io/KNOWHERE/home#explore",
+    "performance": null,
+    "seo": null,
+    "accessibility": null,
+    "bestPractices": null
+  }
+]
