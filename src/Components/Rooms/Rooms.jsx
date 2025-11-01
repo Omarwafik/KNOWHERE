@@ -1,280 +1,315 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { rooms } from "../../data/data";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
+import { Categories } from "../../data/data";
+import { X, User, ChevronLeft, ChevronRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import Loading from "../Loading/Loading";
 import {
-  fadeInDown,
-  fadeInDownLong,
   fadeInLeft,
   fadeInLeftLong,
   fadeInRight,
+  fadeInUpLong,
 } from "../../Motion/motion";
-import img from "../../assets/images/Meeting Rooms/BigMeetingRoom/BMR.jpg";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+// import img from "../../assets/images/Meeting Rooms/BigMeetingRoom/BMR2.avif";
+import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 export default function Rooms() {
   const { category } = useParams();
+  const currentCategory = Categories.find((c) => c.category === category);
   const navigate = useNavigate();
   const [filteredRooms, setFilteredRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [hoverItem, sethoverItem] = useState(null);
   const [preview, setPreview] = useState(null);
-
+  const [loading, setLoading] = useState(false);
+  const guest = JSON.parse(localStorage.getItem("xmode"));
   useEffect(() => {
     const filtered = rooms.filter((r) => r.category === category);
     setFilteredRooms(filtered);
     setSelectedRoom(filtered[0] || null);
-    console.log(category.toLowerCase());
   }, [category]);
-
   return (
-    <div className="grid lg:grid-cols-4 gap-4 px-3 sm:px-6 mt-14 min-h-[95vh] py-8 sm:py-12 relativeb bg-center bg-no-repeat overflow-hidden">
-      {/* Sidebar - ثابت على lg */}
-      <div className="hidden lg:flex col-span-1 border-r pr-4 flex-col justify-center gap-8">
-        <motion.h2
+    <>
+  <Helmet>
+  {/* Title */}
+  <title>Knowhere | Coworking Spaces, Offices & Meeting Rooms in New Cairo</title>
+
+  {/* Description */}
+  <meta
+    name="description"
+    content="Knowhere is your perfect workspace in New Cairo — offering modern coworking areas, private offices, and meeting rooms designed for freelancers, startups, and teams. Work, connect, and grow in a professional environment built for success."
+  />
+
+  {/* Keywords */}
+  <meta
+    name="keywords"
+    content="coworking space New Cairo, shared office Egypt, private office, meeting rooms, virtual office, workspace Egypt, office rental, coworking in Egypt, startup office"
+  />
+
+  {/* Canonical */}
+  <link rel="canonical" href="https://knowhere-eg.com/" />
+
+  {/* OG & Twitter Meta Tags */}
+  <meta property="og:title" content="Knowhere | Coworking Spaces in New Cairo" />
+  <meta
+    property="og:description"
+    content="Explore coworking spaces, private offices, and meeting rooms at Knowhere. The ideal workspace for freelancers, startups, and professionals in New Cairo."
+  />
+  <meta property="og:image" content="https://knowhere-eg.com/assets/images/Logo.jpg" />
+  <meta property="og:url" content="https://knowhere-eg.com/" />
+  <meta property="og:type" content="website" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Knowhere | Coworking Spaces in New Cairo" />
+  <meta
+    name="twitter:description"
+    content="Book your ideal coworking space or private office at Knowhere. Perfect for freelancers and startups in New Cairo."
+  />
+  <meta name="twitter:image" content="https://knowhere-eg.com/assets/images/Logo.jpg" />
+</Helmet>
+
+    <main className="p-10 px-5 md:px-8 lg:px-14 min-h-[90vh] mt-10  overflow-hidden">
+      <section className="w-full flex flex-col gap-5 md:flex-row justify-between items-center p-3 mb-5">
+        <motion.h1
           variants={fadeInLeft}
           initial="hidden"
-          whileInView="show"
+          animate="show"
           viewport={{ once: true }}
-          className="text-3xl font-bold mb-4 text-white"
+          className="text-4xl sm:text-5xl md:text-6xl w-full md:w-[280px] font-title"
         >
-          {category}
-        </motion.h2>
-        <motion.ul
-          // variants={containerStagger}
-          // initial="hidden"
-          // whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          className="space-y-2 flex flex-col "
+          {category.replace(/([a-z])([A-Z])/g, "$1\n$2")}
+        </motion.h1>
+        <motion.p
+          variants={fadeInRight}
+          initial="hidden"
+          animate="show"
+          viewport={{ once: true }}
+          className="max-w-2xl text-sm md:text-base text-wrap"
         >
-          {filteredRooms.map((room, i) => (
-            <motion.li
-              key={i} // ده المفتاح المهم
-              // variants={fadeInLeft}
-              onMouseEnter={() => sethoverItem(i)}
-              onMouseLeave={() => sethoverItem(null)}
-              onClick={() => setSelectedRoom(room)}
-              className={`p-3 rounded-lg cursor-pointer transition w-[90%]  ${
-                selectedRoom?.id === room.id
-                  ? "scale-125 ml-7 opacity-100 text-white"
-                  : `text-white ${
-                      hoverItem === i
-                        ? "scale-125 ml-7 opacity-100"
-                        : "opacity-50"
-                    } transition duration-200 `
-              }`}
+          {/* wf */}
+          {currentCategory.bigDescription}
+        </motion.p>
+      </section>
+      {/* Virtual OFfice */}
+      {category === "VirtualOffice" && (
+        <main>
+          <section className="flex justify-start w-full">
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={30}
+              slidesPerView={1}
+              navigation={{
+                nextEl: ".custom-next",
+                prevEl: ".custom-prev",
+              }}
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+                // pauseOnMouseEnter: true,
+              }}
+              loop={true}
+              className="shadow-lg w-full md:w-[70%] h-[300px] md:h-[400px] lg:h-[450px]  max-w-full rounded-xl"
             >
-              {room.name}
-            </motion.li>
-          ))}
-        </motion.ul>
-        <div className="button text-center">
-          {/* garab b3d ma terfa3o */}
-          {/* <a
-            href="/home#explore"
-            className="px-3 py-1 bg-primary text-white hover:bg-secondary rounded inline-block"
-          >
-            Go back
-          </a> */}
-          {/* 7al tany */}
-          {/* <button
-            onClick={() => {
-              window.location.replace("/home#explore");
-            }}
-            className="px-3 py-1 bg-primary text-white hover:bg-secondary rounded"
-          >
-                  Go back
-          </button> */}
-          <button
-            className="px-3 py-1 bg-primary text-white hover:bg-secondary rounded"
-            onClick={() => navigate("/home#explore")}
-          >
-            {/* {" "} */}
-            Go back
-            {/* {" "} */}
-          </button>
-        </div>
-      </div>
-      {category.toLowerCase() === "virtual office" ? null : (
-        <div className="lg:hidden  p-1 col-span-3 w-full flex justify-center overflow-hidden">
-          <div className="w-fit p-2 flex bg-light rounded overflow-x-scroll scrollbar-thin scrollbar-thumb-secondary scrollbar-track-gray-200 h-fit">
-            <ul className="flex flex-nowrap gap-3">
-              {filteredRooms.map((room, i) => (
-                <li
-                  key={i}
-                  onClick={() => {
-                    // console.log(room)
-                    setSelectedRoom(room);
-                    setShowSidebar(false);
-                  }}
-                  className={`p-3 text-[12px] sm:text-[14px] rounded-lg cursor-pointer transition min-w-fit ${
-                    selectedRoom?.id === room.id
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100 hover:bg-gray-200"
-                  }`}
-                >
-                  {room.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+              {filteredRooms.length > 0 &&
+                filteredRooms[0].img?.virtualOffice?.map((image, index) => (
+                  <SwiperSlide key={index} className="relative">
+                    <img
+                      src={image}
+                      alt={`${filteredRooms[0].name}-${index}`}
+                      loading="lazy"
+                      className="h-full w-full object-fill cursor-pointer"
+                      onClick={() => setPreview(image)} 
+                    />
+                    <h1 className="text-sm md:text-base lg:text-xl text-white font-bold absolute top-5 left-5 px-3 py-1 rounded bg-black/50">
+                      {filteredRooms[0].name}
+                    </h1>
+                  </SwiperSlide>
+                ))}
+
+              <div className="custom-prev absolute z-10 left-2 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-orange-500 p-2 sm:p-3 text-white shadow-lg hover:bg-orange-600">
+                <ChevronLeft />
+              </div>
+              <div className="custom-next absolute z-10 right-2 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-orange-500 p-2 sm:p-3 text-white shadow-lg hover:bg-orange-600">
+                <ChevronRight />
+              </div>
+            </Swiper>
+            {/* // preview Image // Preview Modal */}
+            {preview && (
+              <div
+                className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
+                onClick={() => setPreview(null)}
+              >
+                <div className="relative">
+                  <img
+                    src={preview}
+                    alt="Preview"
+                    loading="lazy"
+                    className="max-w-[95vw] max-h-[90vh] rounded-lg shadow-lg"
+                  />
+                  <button
+                    className="absolute top-2 right-2 bg-white/90 text-black p-2 rounded-full shadow hover:bg-white"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPreview(null);
+                    }}
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
+            )}
+          </section>
+          {filteredRooms.length > 0 && (
+            <aside className="flex flex-col gap-5 mt-10">
+              <motion.h1
+                variants={fadeInUpLong}
+                initial="hidden"
+                animate="show"
+                viewport={{ once: true }}
+                className="text-3xl md:text-5xl "
+              >
+                Brief Description
+              </motion.h1>
+              <motion.p
+                variants={fadeInLeftLong}
+                initial="hidden"
+                animate="show"
+                viewport={{ once: true }}
+                className="opacity-70"
+              >
+                {filteredRooms[0].description}{" "}
+              </motion.p>
+            </aside>
+          )}
+        </main>
       )}
-      {/* المحتوى */}
-      {category.toLowerCase() === "virtual office" ? (
-        // <div className="flex flex-col gap-10">
-        <div className="col-span-3">
-          <h1 className="lg:hidden block text-2xl sm:text-4xl font-bold mb-2 text-white">
-            {category}
-          </h1>
-          <img
-            src={img}
-            className="w-full h-[50vh] object-cover rounded"
-            alt="Virtual office Image"
-          />
-          <p className="text-white my-5">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid
-            assumenda ipsa suscipit, numquam repudiandae voluptas animi
-            accusantium vitae voluptatibus enim ipsam sunt fugiat cumque culpa
-            nemo ea dolorum incidunt blanditiis aspernatur voluptatum autem quod
-            libero! Beatae porro enim illum libero nemo explicabo nam soluta,
-            voluptatibus sit provident eligendi laboriosam doloremque?
-          </p>
-          <div className="lg:hidden">
-            <button
-              className="px-3 py-1 bg-primary text-white hover:bg-secondary rounded text-sm sm:text-base"
-              onClick={() => navigate("/home#explore")}
-            >
-              Go back
-            </button>
-          </div>
-        </div>
-      ) : (
-        // </div>
-        <AnimatePresence mode="wait">
-          {selectedRoom && (
-            <motion.div
-              key={selectedRoom.id}
-              variants={fadeInDownLong}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
-              className="col-span-3"
-            >
-              {selectedRoom ? (
-                <div className="bg-light p-0 sm:p-4 shadow-lg rounded-xl">
-                  <div className="flex justify-between items-center">
-                    <div className="p-3 sm:p-0 capitalize">
-                      <h3 className="text-lg sm:text-2xl font-bold mb-2">
-                        {selectedRoom.name}
-                      </h3>
-                      <p className="text-gray-500 mb-4 text-sm sm:text-md">
-                        Capacity: {selectedRoom.capacity}
-                      </p>
-                    </div>
-                    {
-                      <div className="lg:hidden mr-8">
-                        <button
-                          className="px-3 py-1 bg-primary text-white hover:bg-secondary rounded text-sm sm:text-base"
-                          onClick={() => navigate("/home#explore")}
-                        >
-                          Go back
-                        </button>
-                      </div>
-                    }
-                  </div>
+      {category !== "VirtualOffice" && (
+        <section className="grid grid-col-1  md:grid-cols-2 gap-5 md:gap-8 ">
+          {filteredRooms.map((room, i) => (
+            <main key={i}>
+              <div className="relative p-5 rounded-2xl flex items-end h-[500px] overflow-hidden cursor-pointer group">
+                {loading && <Loading />}
+                <img
+                  src={room.img[0]}
+                  alt={room.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+                  loading="lazy"
+                  onClick={() => setPreview(room.img[0])}
+                  onLoad={() => setLoading(false)}
+                />
+                <div className="relative z-10 flex sm:flex-row flex-col   sm:items-center gap-3 bg-black/60 text-white cursor-default p-3 sm:p-5 w-full rounded-lg">
+                  <div className="flex flex-row justify-between sm:flex-col gap-2 sm:flex-1">
+                    <strong className="text-sm flex-1  text-white flex items-center gap-1 rounded">
+                      <User className="text-white w-6 h-6 md:w-10 md:h-10" />
+                      <span className="text-xs md:text-base font-bold ">
+                        {room.capacity} Seats
+                      </span>
+                    </strong>
+                    <div className="hidden sm:flex gap-4 flex-wrap">
+                      {room.icons?.map?.(({ icon: Icon, label }, i) => (
+                        <Icon className="w-5 h-5 lg:w-6 lg:h-6" key={i} />
+                      ))}
 
-                  {selectedRoom.img.length > 0 ? (
-                    <div className="mb-4 relative">
-                      <Swiper
-                        modules={[Navigation, Pagination, Autoplay]}
-                        spaceBetween={30}
-                        slidesPerView={1}
-                        navigation={{
-                          nextEl: ".custom-next",
-                          prevEl: ".custom-prev",
-                        }}
-                        pagination={{ clickable: true }}
-                        autoplay={{
-                          delay: 3000,
-                          disableOnInteraction: false,
-                          pauseOnMouseEnter: true,
-                        }}
-                        loop={true}
-                        className="shadow-lg w-full h-full max-w-full "
-                      >
-                        {selectedRoom.img.map((image, index) => (
-                          <SwiperSlide key={index} className="">
-                            <img
-                              src={image}
-                              alt={`${selectedRoom.name}-${index}`}
-                              loading="lazy"
-                              className="h-full w-full sm:h-[60vh] sm:object-cover "
-                              onClick={() => setPreview(image)} // 👈 هنا الفيو
-                            />
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
-                      <div className="custom-prev absolute z-10 left-2 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-orange-500 p-2 sm:p-3 text-white shadow-lg hover:bg-orange-600">
-                        <ChevronLeft />
-                      </div>
-                      <div className="custom-next absolute z-10 right-2 top-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-orange-500 p-2 sm:p-3 text-white shadow-lg hover:bg-orange-600">
-                        <ChevronRight />
-                      </div>
                     </div>
-                  ) : (
-                    <div className="mb-4 bg-gray-200 h-64 flex items-center justify-center rounded-xl">
-                      No Image
-                    </div>
-                  )}
-
-                  {/* Preview Modal */}
-                  {preview && (
-                    <div
-                      className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
-                      onClick={() => setPreview(null)}
+                    <button
+                      onClick={() => {
+                        guest
+                          ? (() => {
+                              toast.error("You must sign up first!");
+                              setTimeout(() => navigate("/Signup"), 500); 
+                            })()
+                          : navigate(
+                              `/${room.category}/${room.name.replace(
+                                /\s+/g,
+                                ""
+                              )}`
+                            );
+                      }}
+                      className="group/button relative inline-flex sm:hidden items-center justify-center overflow-hidden rounded-md bg-secondary backdrop-blur-lg px-3 py-2 lg:px-6 lg:py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20"
                     >
-                      <div className="relative">
-                        <img
-                          src={preview}
-                          alt="Preview"
-                          className="max-w-[95vw] max-h-[90vh] rounded-lg shadow-lg"
-                        />
-                        <button
-                          className="absolute top-2 right-2 bg-white/90 text-black p-2 rounded-full shadow hover:bg-white"
-                          onClick={(e) => {
-                            e.stopPropagation(); // عشان ميتقفلش لما تدوس جوه
-                            setPreview(null);
-                          }}
-                        >
-                          <X size={20} />
-                        </button>
-                      </div>
+                      <span className="text-sm sm:text-base lg:text-lg">
+                        Show Details
+                      </span>
+                    </button>
+                  </div>
+                  {/* <!-- From Uiverse.io by elijahgummer -->  */}
+                  <button
+                    onClick={() => {
+                     guest
+                          ? (() => {
+                              toast.error("You must sign up first!");
+                              setTimeout(() => navigate("/Signup"), 500);
+                            })()
+                        : navigate(
+                            `/${room.category}/${room.name.replace(
+                              /\s+/g,
+                              ""
+                            )}`
+                          );
+                     }}
+                    className="group/button relative hidden sm:inline-flex items-center justify-center overflow-hidden rounded-md bg-secondary backdrop-blur-lg px-3 py-2 lg:px-6 lg:py-2 text-base font-semibold text-white transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-xl hover:shadow-gray-600/50 border border-white/20"
+                  >
+                    <span className="text-sm sm:text-base lg:text-lg">
+                      Show Details
+                    </span>
+                    <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-13deg)_translateX(-100%)] group-hover/button:duration-1000 group-hover/button:[transform:skew(-13deg)_translateX(100%)]">
+                      <div className="relative h-full w-10 bg-white/20"></div>
                     </div>
-                  )}
+                  </button>
+                  <div className="sm:hidden flex justify-around flex-wrap">
+                  {room.icons?.map?.(({ icon: Icon, label }, i) => (
+                    <Icon className="w-5 h-5 lg:w-6 lg:h-6" key={i} />
+                  ))}
 
-                  <div className="p-3 sm:p-0 capitalize">
-                    <p className="mb-2 text-sm sm:text-lg ">
-                      {selectedRoom.description}
-                    </p>
-                    <p className="text-sm sm:text-[15px] text-gray-600">
-                      Facilities: {selectedRoom.facilities}
-                    </p>
                   </div>
                 </div>
-              ) : (
-                <p>No rooms available for this category.</p>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+
+                {/* // preview Image // Preview Modal */}
+                {preview && (
+                  <div
+                    className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
+                    onClick={() => setPreview(null)}
+                  >
+                    <div className="relative">
+                      <img
+                        src={preview}
+                        alt="Preview"
+                        loading="lazy"
+                        className="max-w-[95vw] max-h-[90vh] rounded-lg shadow-lg"
+                      />
+                      <button
+                        className="absolute top-2 right-2 bg-white/90 text-black p-2 rounded-full shadow hover:bg-white"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPreview(null);
+                        }}
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <section key={i} className="mt-5 flex flex-col gap-2">
+                <h1 className="text-3xl sm:text-4xl md:text-4xl font-title">
+                  {room.name}
+                </h1>
+                <span className="text-sm sm:text-base md:text-lg leading-5 text-gray-500">
+                  {room.tagline}
+                </span>
+              </section>
+            </main>
+          ))}
+        </section>
       )}
-    </div>
+    </main>
+    </>
   );
 }

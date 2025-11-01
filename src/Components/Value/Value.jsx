@@ -14,9 +14,10 @@ import {
   HeartHandshake,
   Armchair,
 } from "lucide-react";
-import bgValues from "../../assets/images/Meeting Rooms/V10/V-10.jpg";
+import bgValues from "../../assets/images/SharedArea/Floor1/SharedArea1_2.avif";
 import { motion } from "framer-motion";
 import { fadeInDown, fadeInLeft } from "../../Motion/motion";
+import { Helmet } from "react-helmet-async";
 const values = [
   {
     icon: <Wifi className="sm:w-14 sm:h-14 w-10 h-10" />,
@@ -34,43 +35,26 @@ const values = [
     icon: <Briefcase className="sm:w-14 sm:h-14 w-10 h-10" />,
     facility: "Freelancing & Virtual Office",
   },
-  // {
-  //   icon: <Building2 className="sm:w-8 sm:h-8 w-6 h-6" />,
-  //   facility: "Flexible Workspace",
-  // },
-  // {
-  //   icon: <Volume2 className="sm:w-8 sm:h-8 w-6 h-6 " />,
-  //   facility: "Quiet Zones",
-  // },
-  // {
-  //   icon: <Trees className="sm:w-8 sm:h-8 w-6 h-6 " />,
-  //   facility: "Indoor & Outdoor Areas",
-  // },
-  // {
-  //   icon: <Coffee className="sm:w-8 sm:h-8 w-6 h-6" />,
-  //   facility: "Coffee & Snack Bar",
-  // },
-  // {
-  //   icon: <MapPin className="sm:w-8 sm:h-8 w-6 h-6 " />,
-  //   facility: "Central Location",
-  // },
-  // {
-  //   icon: <Laptop className="sm:w-8 sm:h-8 w-6 h-6 " />,
-  //   facility: "Modern Facilities",
-  // },
-  // {
-  //   icon: <HeartHandshake className="sm:w-8 sm:h-8 w-6 h-6" />,
-  //   facility: "Collaboration & Support",
-  // },
-  // {
-  //   icon: <Armchair className="sm:w-8 sm:h-8 w-6 h-6" />,
-  //   facility: "Modern Furniture",
-  // },
+
 ];
 export default function Value() {
   return (
+    <>
+     <Helmet>
+              <title>Knowhere – Find Your Perfect Workspace</title>
+              <meta
+                name="description"
+                content="Discover and book coworking spaces, private offices, and meeting rooms with Knowhere. Perfect for freelancers, startups, and teams seeking flexible workspaces."
+              />
+              <meta
+                name="keywords"
+                content="coworking spaces, shared office, meeting rooms, virtual office, workspace Egypt"
+              />
+                      <link rel="canonical" href="https://knowhere-eg.com/" />
+            
+            </Helmet>
     <section
-      className="cont px-3 py-12 sm:p-4 sm:py-20 mb-14  bg-cover bg-center bg-white bg-fixed shadow-2xl"
+      className="cont px-3 py-14 sm:p-4 sm:py-16 md:py-20 mb-14  bg-cover bg-center bg-white bg-fixed shadow-2xl"
       style={{
         backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${bgValues})`,
       }}
@@ -80,9 +64,9 @@ export default function Value() {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.6 }}
-        className="text-4xl sm:text-6xl mb-5 sm:mb-3 text-primary text-center font-title"
+        className="text-4xl md:text-5xl lg:text-6xl mb-5 sm:mb-3 text-white text-center font-title"
       >
-        <span className="text-primary">What we </span>Offer
+        <span className="text-white">What we </span>Offer
       </motion.h1>
       <motion.div
         variants={fadeInLeft}
@@ -91,10 +75,10 @@ export default function Value() {
         viewport={{ once: true, amount: 0.6 }}
         className="text-white flex flex-col gap-3 mb-3  ps-4 sm:ps-10 max-w-[750px]"
       >
-        <h2 className="text-4xl text-left font-paragraph">
+        <h2 className="text-xl md:text-3xl lg:text-4xl text-left font-paragraph">
           Work Smarter. Build Better.
         </h2>
-        <p className="text-xl text-left">
+        <p className="text-sm md:text-xl text-left opacity-90">
           More than an office or business center — a community of creators,
           startups, and teams with flexible spaces.
         </p>
@@ -103,7 +87,7 @@ export default function Value() {
         {values.map((value, i) => (
           <div
             key={i}
-            className="flex flex-col bg-white/20 py-5 sm:py-10 justify-between items-center gap-5 sm:gap-10 
+            className="flex flex-col bg-white/20 py-5 sm:py-8 md:py-10 justify-between items-center gap-5 sm:gap-10 
           rounded shadow-2xl hover:-translate-y-3 hover:bg-white/30 transition
           "
           >
@@ -117,5 +101,6 @@ export default function Value() {
         ))}
       </main>
     </section>
+    </>
   );
 }

@@ -91,3 +91,11 @@ export const fadeInDownLong = {
     transition: { type: "tween", duration: 1, ease: "easeOut" },
   },
 };
+export const childBounce = {
+  hidden: { scale: 0.8, opacity: 0 },
+  show: {
+    scale: 1,
+    opacity: 1,
+    transition: { duration: 0.5, ease: "backOut" },
+  },
+};

@@ -1,18 +1,15 @@
-import React, { useCallback, useMemo, memo } from "react";
+import React, { useCallback, useMemo, memo, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  containerSequential,
-  containerStagger,
-  fadeInDown,
-  fadeInUp,
-} from "../../Motion/motion";
+import { fadeInDown } from "../../Motion/motion";
 import { Categories } from "../../data/data";
 import { MoveRight } from "lucide-react";
 import styles from "./Explore.module.css";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const Card = React.memo(({ cat, onNavigate }) => {
-  // console.log(object)
+  const catLink = cat.category.trim().toLowerCase().replace(/\s+/g, "-");
+  // console.log(catLink);
   return (
     <div
       // variants={fadeInUp}
@@ -20,8 +17,8 @@ const Card = React.memo(({ cat, onNavigate }) => {
       style={{ willChange: "transform" }}
     >
       <div
-        className="h-[60vh] w-[280px] sm:w-full relative rounded-xl"
-        onClick={() => onNavigate(`/rooms/${cat.category}`)}
+        className="h-[60vh] w-[300px] sm:w-full relative rounded-xl"
+        onClick={() => onNavigate(`/${cat.category}`)}
       >
         <img
           src={cat.image}
@@ -33,8 +30,8 @@ const Card = React.memo(({ cat, onNavigate }) => {
           sizes="(max-width: 640px) 100vw, 300px"
           className="w-full h-full object-cover object-center rounded-xl"
         />
-        <div className="bg-light p-5 absolute -top-2 -right-4 rounded-full">
-          <MoveRight className="w-[35px] h-[35px] text-white bg-black rounded-full p-2 group-hover:animate-bounce" />
+        <div className="bg-white p-4 absolute -top-1 -right-3 rounded-full">
+          <MoveRight className="w-[40px] h-[40px] text-white bg-black rounded-full p-3 sm:group-hover:animate-bounce" />
         </div>
       </div>
       <div className="text my-2 flex flex-col gap-2 sm:self-start">
@@ -57,7 +54,21 @@ function Explore() {
   const cats = useMemo(() => Categories, []);
 
   return (
-    <div className="bg-light " id="explore">
+    <>
+     <Helmet>
+              <title>Knowhere – Find Your Perfect Workspace</title>
+              <meta
+                name="description"
+                content="Discover and book coworking spaces, private offices, and meeting rooms with Knowhere. Perfect for freelancers, startups, and teams seeking flexible workspaces."
+              />
+              <meta
+                name="keywords"
+                content="coworking spaces, shared office, meeting rooms, virtual office, workspace Egypt"
+              />
+                      <link rel="canonical" href="https://knowhere-eg.com/" />
+            
+            </Helmet>
+    <div className="mt-24" id="explore">
       <motion.h1
         variants={fadeInDown}
         initial="hidden"
@@ -73,13 +84,14 @@ function Explore() {
         // whileInView="show"
         // viewport={{ once: true, amount: 0.2 }}
         // variants={containerSequential}
-        className={`${styles.cardsContainer} bg-light p-0 sm:p-5 md:p-10 grid [grid-template-columns:repeat(auto-fit,minmax(290px,1fr))] gap-5 `}
+        className={`${styles.cardsContainer} p-0 sm:p-5 md:p-10 grid [grid-template-columns:repeat(auto-fit,minmax(290px,1fr))] gap-5 `}
       >
         {cats.map((cat) => (
           <Card key={cat.category} cat={cat} onNavigate={handleNavigate} />
         ))}
       </section>
     </div>
+    </>
   );
 }
 

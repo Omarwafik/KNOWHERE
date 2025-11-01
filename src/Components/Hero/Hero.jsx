@@ -1,5 +1,6 @@
 import { memo, useMemo, useCallback } from "react";
-import bgHero from "../../assets/images/SharedArea/Floor2/SharedArea1_2.avif";
+// import bgHero from "../../assets/images/SharedArea/Floor1/SharedArea1_2.avif";
+import bgHero from "../../assets/images/Meeting Rooms/V10/V10-1.avif";
 import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
 import { Parallax } from "react-parallax";
@@ -8,6 +9,9 @@ import {
   fadeInLeftLong,
   fadeInRightLong,
 } from "../../Motion/motion";
+import NavBar from "../NavBar/NavBar";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 // Memoized Typewriter component to prevent unnecessary re-renders
 const MemoizedTypewriter = memo(
@@ -63,25 +67,55 @@ function Hero() {
     }
   }, []);
 
+  const guest = JSON.parse(localStorage.getItem("xmode"));
+
+
   return (
     <>
+      <Helmet>
+                <title>Knowhere – Find Your Perfect Workspace</title>
+                <meta
+                  name="description"
+                  content="Discover and book coworking spaces, private offices, and meeting rooms with Knowhere. Perfect for freelancers, startups, and teams seeking flexible workspaces."
+                />
+                <meta
+                  name="keywords"
+                  content="coworking spaces, shared office, meeting rooms, virtual office, workspace Egypt"
+                />
+                        <link rel="canonical" href="https://knowhere-eg.com/" />
+              
+      </Helmet>
+      <NavBar />
       {/* <Parallax bgImage={bgHero} {...parallaxConfig}> */}
-      <section className=" h-[100vh]">
+      <section className="min-h-[90vh]">
         <main
-          className="hero relative min-h-screen w-full overflow-hidden flex  items-end bg-cover bg-center sm:bg-fixed"
+          className="hero relative  h-screen w-full overflow-hidden flex  items-end bg-cover bg-center sm:bg-fixed"
           style={{
             backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${bgHero})`,
           }}
         >
           {/* <div className="absolute inset-0 bg-black/80" /> */}
-
-          <div className="w-full h-[80vh] z-10 text-white  font-bold sm:p-3 md:p-16 flex justify-center items-center sm:justify-end sm:items-start flex-col gap-6">
+          {
+            guest && 
+          <div className="z-20 rounded absolute top-20 right-0 bg-secondary text-white text-center py-2 px-4 flex items-center justify-center gap-3 ">
+            <span className="text-xs md:text-base font-medium">
+              🎉 Get your <b>FREE TRIAL</b> when you{" "}
+              <Link to={"/Signup"} className="underline">
+                {" "}
+                register{" "}
+              </Link>{" "}
+              today!
+            </span>
+            <button className=" right-3 text-white hover:text-gray-200 transition"></button>
+          </div>
+          }
+          <div className="w-full h-[90vh] z-10 text-white font-bold sm:p-8 md:p-10 lg:p-16 flex justify-center items-center sm:justify-end sm:items-start flex-col gap-6">
             <motion.h1
               variants={fadeInDownLong}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-100px" }}
-              className="text-5xl sm:text-7xl font-bold font-title text-primary p-1"
+              className="text-4xl md:text-7xl font-bold font-title text-primary p-1"
             >
               <MemoizedTypewriter {...typewriterConfig} />
             </motion.h1>
@@ -90,7 +124,7 @@ function Hero() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-100px" }}
-              className="w-[4/4] sm:w-3/4 md:w-2/4 opacity-85 text-wrap text-center sm:text-start text-xs  sm:text-sm md:text-lg !leading-7 p-1"
+              className="w-3/4 lg:w-2/4 opacity-85 text-wrap text-center sm:text-start   text-sm md:text-lg !leading-7 p-1 "
             >
               Welcome to KNOWHERE — your creative coworking space in the heart
               of the city. Whether you're a freelancer, a startup, or a growing

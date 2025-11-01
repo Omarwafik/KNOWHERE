@@ -12,6 +12,7 @@ export const getCsrfToken = async () => {
 };
 
 // تسجيل الدخول
+// 3iez ab3at hena is_guest
 export const login = async (email, password) => {
   const res = await API.post(
     "/login/",

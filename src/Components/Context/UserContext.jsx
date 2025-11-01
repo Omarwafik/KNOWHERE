@@ -19,8 +19,6 @@ export const UserProvider = ({ children }) => {
   const loginUser = (userData) => {
     setUser(userData);
     localStorage.setItem("Current_User", JSON.stringify(userData));
-    // const user = localStorage.getItem("Current_User");
-    // console.log(user);
   };
 
   // Function for log out

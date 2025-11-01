@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import '../Styles/Variables.css';
 import App from './App.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import { HelmetProvider } from 'react-helmet-async';
 
 
 
@@ -10,7 +11,9 @@ const client_ID ="405081202926-qv8tajapniu7ktc7vhdekpg6iimgufbi.apps.googleuserc
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <GoogleOAuthProvider clientId={client_ID}>
-      <App />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </GoogleOAuthProvider>
   </StrictMode>,
 )

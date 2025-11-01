@@ -1,9 +1,9 @@
 import React from "react";
-import company from "../../assets/images/KW/KWCompany.avif";
+import company from "../../assets/images/KW/KW5.avif";
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 // import { motion } from "framer-motion";
-import { Armchair } from "lucide-react";
+import { Armchair, DoorOpen } from "lucide-react";
 import { useInView } from "react-intersection-observer";
 
 import {
@@ -12,15 +12,32 @@ import {
   fadeInLeft,
   fadeInUp,
 } from "../../Motion/motion";
+import { Helmet } from "react-helmet-async";
 export default function About() {
   const { ref, inView } = useInView({ triggerOnce: true }); // مرة واحدة لما يظهر
 
   return (
+    <>
+     <Helmet>
+              <title>Knowhere – Find Your Perfect Workspace</title>
+              <meta
+                name="description"
+                content="Discover and book coworking spaces, private offices, and meeting rooms with Knowhere. Perfect for freelancers, startups, and teams seeking flexible workspaces."
+              />
+              <meta
+                name="keywords"
+                content="coworking spaces, shared office, meeting rooms, virtual office, workspace Egypt"
+              />
+                      <link rel="canonical" href="https://knowhere-eg.com/" />
+            
+            </Helmet>
     <section
-      className="px-5 py-20 md:py-24 m-1 md:m-3 flex flex-col md:flex-row justify-center gap-3 sm:gap-5  items-center min-h-[80vh] bg-white p-5 rounded"
-      style={{
-        background: "linear-gradient(315deg, #e4e2dd 50%, #ffff 50%)",
-      }}
+      className="px-2 sm:px-5 py-20 md:py-24 flex flex-col md:flex-row justify-center gap-3 sm:gap-5  items-center min-h-[80vh] bg-white p-5 rounded"
+      style={
+        {
+          // background: "linear-gradient(315deg, #e4e2dd 50%, #ffff 50%)",
+        }
+      }
       id="about"
     >
       {/* kalam */}
@@ -58,20 +75,23 @@ export default function About() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <div className="flex gap-2 sm:gap-10 mt-5">
-            <div className="flex gap-3 sm:gap-5 items-center px-6 py-2 text-2xl font-medium ">
+          <div className="flex gap-2 sm:gap-10 items-center justify-center mt-5">
+            <div className="flex gap-3 sm:gap-5 items-center  px-6 py-2 text-2xl font-medium ">
               {/* <Armchair
                 className="w-12 h-12 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-20 lg:h-20"
                 color="#d85b00"
               /> */}
-              <link type="image/png" sizes="32x32" rel="icon" href=".../icons8-meeting room-ios_filled-32.png"></link>
+              <Armchair
+                className="w-12 h-12 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-20 lg:h-20"
+                color="#d85b00"
+              />
               <div className="flex flex-col sm:text-2xl text-sm">
                 <span>Seats</span>
                 <span>+{inView && <CountUp end={105} duration={4} />}</span>
               </div>
             </div>
             <div className="flex gap-3 sm:gap-5 items-center px-6 py-2 text-2xl font-medium ">
-              <Armchair
+              <DoorOpen
                 className="w-12 h-12 sm:w-16 sm:h-16 md:w-18 md:h-18 lg:w-20 lg:h-20"
                 color="#d85b00"
               />
@@ -100,5 +120,6 @@ export default function About() {
         />
       </motion.aside>
     </section>
+    </>
   );
 }
